@@ -12,8 +12,8 @@
         </div>
 
         <div class='col'>
-          <p class="grey"> pressura </p>
-          <p> 928 </p>
+          <p class="grey"> pressure </p>
+          <p> {{weatherInfo.pressure}} </p>
         </div>
       </div>
 
@@ -31,15 +31,10 @@
   export default  {
     name: 'weather-info',
     props: {
-      weatherInfo: {
-        temperature: Number,
-        pressure: Number,
-        humidity: Number,
-        updateDate: Date
-      }
+      weatherInfo: Object,
     },
     mounted () {
-
+      console.log(this.weatherInfo)
     },
     data () {
       return {

@@ -5,7 +5,7 @@
       <p class="daker-grey"> City name </p>
     </header>
     <body>
-      <component :is="cardInfoComponent"></component>
+      <component :is="currentComponent" v-bind="{weatherInfo: weatherInfo}"></component>
     </body>
     
   </section>
@@ -31,21 +31,54 @@
       ErrorComponent,
     },
     props: {
-      weatherInfo: Object,
+      cityId: Number,
     },
     mounted () {
+      this.loadResources();
     },
     data () {
       return {
-
+        weatherInfo: {},
+        status: 2
       }
     },
     methods: {
+      async loadResources() {
+        this.status = 3
+        const apiKey = '5c97dec5122c0098153b2e306fe538fa';
+        try {
+          const response = await this.$http.get(`http://api.openweathermap.org/data/2.5/weather?id=${this.cityId}&appid=${apiKey}&units=metric`);
+          this.status = 1
+          this.weatherInfo = this.cityWeatherDto(response.body);
+          return this.cityWeatherDto(response.body);
+        }catch (e) {
+          console.log(e);
+          this.status = 2
+        }
+      },
 
+      cityWeatherDto({id, name, sys:{country} , main:{temp, pressure, humidity}}) {
+        const info = {
+          id,
+          name,
+          country,
+          temp,
+          pressure,
+          humidity
+        };
+        return info
+      }
     },
     computed: {
-      cardInfoComponent() {
-        return statusComponentEnum[this.weatherInfo.status];
+      currentComponent() {
+        return statusComponentEnum[this.status];
+      },
+      // TODO Set props dinamically
+      currentProperties() {
+        if (this.currentComponent === 'WeatherInfoComponent') {
+          return {weatherInfo: this.weatherInfo};
+        }
+        return {}
       }
     }
 }
