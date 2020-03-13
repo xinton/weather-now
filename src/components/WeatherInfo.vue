@@ -30,7 +30,14 @@
 
   export default  {
     name: 'weather-info',
-    props: [],
+    props: {
+      weatherInfo: {
+        temperature: Number,
+        pressure: Number,
+        humidity: Number,
+        updateDate: Date
+      }
+    },
     mounted () {
 
     },

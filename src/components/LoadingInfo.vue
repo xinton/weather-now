@@ -1,7 +1,9 @@
 <template lang="html">
 
   <section class="loading-info">
-    <h1>loading-info Component</h1>
+    <figure>
+        <img class="img" alt="Weather Now logo" src="../assets/loader.svg">
+      </figure> 
   </section>
 
 </template>

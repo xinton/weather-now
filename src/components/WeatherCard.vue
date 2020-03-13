@@ -5,7 +5,7 @@
       <p class="daker-grey"> City name </p>
     </header>
     <body>
-      <ErrorComponent />
+      <component :is="cardInfoComponent"></component>
     </body>
     
   </section>
@@ -16,18 +16,24 @@
 
   import WeatherInfoComponent from "./WeatherInfo";
   import ErrorComponent from "./Error";
+  import LoadingInfoComponent from "./LoadingInfo";
+
+  const statusComponentEnum = {
+    1: WeatherInfoComponent,
+    2: ErrorComponent,
+    3: LoadingInfoComponent
+  };
 
   export default  {
     name: 'weatherCard',
     components: {
-      // eslint-disable-next-line vue/no-unused-components
       WeatherInfoComponent,
-      // eslint-disable-next-line vue/no-unused-components
       ErrorComponent,
     },
-    props: [],
+    props: {
+      weatherInfo: Object,
+    },
     mounted () {
-
     },
     data () {
       return {
@@ -38,7 +44,9 @@
 
     },
     computed: {
-
+      cardInfoComponent() {
+        return statusComponentEnum[this.weatherInfo.status];
+      }
     }
 }
 
@@ -46,15 +54,17 @@
 </script>
 
 <style scoped lang="scss">
+  @import "../assets/style";
+
   .weather-card {
     background-color: white;
     border-radius: 5px;
-    box-shadow: 0 0 0.5em rgba(51,51,51,0.1);
+    box-shadow: 0 0 0.5em $box-shadow;
     height: 340px;
   }
 
   .header {
     padding: 5px;
-    border-bottom: 1px solid #f1f1f1;
+    border-bottom: 1px solid $color-app-background;
   }
 </style>
