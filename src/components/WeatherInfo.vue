@@ -2,17 +2,17 @@
 
   <section class="weather-info">
     <body class="body">
-      19
+    {{temperature}}
     </body>
     <footer class="footer">
       <div class="row">
         <div class='col'>
-          <p class="grey"> Umidity </p>
-          <p> 75% </p>
+          <p class="grey"> HUMIDITY </p>
+          <p> {{weatherInfo.humidity}} </p>
         </div>
 
         <div class='col'>
-          <p class="grey"> pressure </p>
+          <p class="grey"> PRESSURE </p>
           <p> {{weatherInfo.pressure}} </p>
         </div>
       </div>
@@ -45,7 +45,9 @@
 
     },
     computed: {
-
+      temperature() {
+        return Math.round(this.weatherInfo.temp);
+      }
     }
 }
 

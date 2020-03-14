@@ -1,8 +1,8 @@
 <template lang="html">
 
   <section class="weather-card">
-    <header class="header" >
-      <p class="daker-grey"> City name </p>
+    <header class="card-header" >
+      <p class="daker-grey"> {{weatherInfo.name}}, {{weatherInfo.country}} </p>
     </header>
     <body>
       <component :is="currentComponent" v-bind="{weatherInfo: weatherInfo}"></component>
@@ -96,7 +96,7 @@
     height: 340px;
   }
 
-  .header {
+  .card-header {
     padding: 5px;
     border-bottom: 1px solid $color-app-background;
   }

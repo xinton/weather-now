@@ -1,13 +1,6 @@
 <template lang="html">
 
   <section class="main">
-    <header>
-      <figure>
-        <img class="img" alt="Weather Now logo" src="../assets/logo.svg">
-      </figure>      
-    </header>
-
-    <main class="main-container">
       <div class="cards row">
 <!--        <div class="column" >-->
 <!--          <WeatherCardComponent :weatherInfo="cardInfo1"/>-->
@@ -16,7 +9,6 @@
           <WeatherCardComponent :cityId="cityId"/>
         </div>
       </div>
-    </main>
   </section>
 
 </template>
@@ -51,32 +43,31 @@
 
 <style scoped lang="scss">
   .main {
+      position: relative;
+      background-color: #f1f1f1;
+      width: 100%;
+      height:100vh;
+      margin-top: 20px;
+  }
 
+  .main-container {
+      background-color: #f1f1f1;
+      width: 100%;
+      height:100vh;
+      position: absolute;
   }
 
   .cards {
     position: absolute;
     top: 25%;
-    left: 15%;
-    right: 15%;
+    left: 20%;
     background-color: yellowgreen;
-  }
-
-  .img {
-    height: 50px;
-  }
-
-  .main-container {
-    background-color: #f1f1f1;
-    width: 100%;
-    height: 800px;
-    position: relative;
   }
 
   /* Float four columns side by side */
   .column {
     float: left;
-    width: 31%;
+    /*width: 31%;*/
     padding: 0 15px;
   }
 
@@ -86,6 +77,13 @@
       width: 100%;
       display: block;
       margin-bottom: 20px;
+    }
+
+    .cards {
+        position: absolute;
+        background-color: yellowgreen;
+        top: 0%;
+        left: 0%;
     }
   }
 </style>
