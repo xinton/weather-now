@@ -93,11 +93,18 @@
     background-color: white;
     border-radius: 5px;
     box-shadow: 0 0 0.5em $box-shadow;
-    height: 340px;
+    height: 310px;
+    width: 250px;
   }
 
   .card-header {
     padding: 5px;
     border-bottom: 1px solid $color-app-background;
+  }
+
+  @media screen and (max-width: 800px) {
+    .weather-card {
+      width: 100%;
+    }
   }
 </style>

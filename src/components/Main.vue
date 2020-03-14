@@ -1,83 +1,95 @@
 <template lang="html">
 
-  <section class="main">
-      <div class="cards row">
-<!--        <div class="column" >-->
-<!--          <WeatherCardComponent :weatherInfo="cardInfo1"/>-->
-<!--        </div>-->
-        <div class="column" v-for="cityId in citiesIds" :key="cityId">
-          <WeatherCardComponent :cityId="cityId"/>
+    <section class="main">
+        <div class="row">
+            <div class="column" v-for="cityId in citiesIds" :key="cityId">
+                <WeatherCardComponent :cityId="cityId"/>
+            </div>
+            <div style="clear: both"></div>
         </div>
-      </div>
-  </section>
+    </section>
 
 </template>
 
 <script lang="js">
-  import WeatherCardComponent from "./WeatherCard.vue";
+    import WeatherCardComponent from "./WeatherCard.vue";
 
-  export default  {
-    name: 'main',
-    components: {
-      WeatherCardComponent,
-    },
-    props: [],
-    mounted () {
-    },
-    data () {
-      return {
-        citiesIds: [3421319, 3445709, 184742],
-        cardInfo1: {status: 1},
-        cardInfo2: {status: 2},
-        cardInfo3: {status: 3},
-      }
-    },
-    methods: {
+    export default  {
+        name: 'main',
+        components: {
+            WeatherCardComponent,
+        },
+        props: [],
+        mounted () {
+        },
+        data () {
+            return {
+                citiesIds: [3421319, 3445709, 184742],
+                cardInfo1: {status: 1},
+                cardInfo2: {status: 2},
+                cardInfo3: {status: 3},
+            }
+        },
+        methods: {
 
-    },
-    computed: {
+        },
+        computed: {
+        }
     }
-}
 
 </script>
 
 <style scoped lang="scss">
-  .main {
-      position: relative;
-      background-color: #f1f1f1;
-      width: 70%;
-      height:100vh;
-      margin: 0px;
-      left: 15%;
-  }
+    @import '../assets/style';
 
-  .cards {
-    position: absolute;
-    top: 25%;
-    left: 20%;
-    background-color: yellowgreen;
-  }
-
-  /* Float four columns side by side */
-  .column {
-    float: left;
-    /*width: 31%;*/
-    padding: 0 15px;
-  }
-
-  /* Responsive columns - one column layout (vertical) on small screens */
-  @media screen and (max-width: 800px) {
-    .column {
-      width: 100%;
-      display: block;
-      margin-bottom: 20px;
+    .main {
+        position: relative;
+        background-color: #f1f1f1;
+        width: 70%;
+        height:100vh;
+        margin: 0px;
+        left: 15%;
     }
 
-    .cards {
+    .row {
         position: absolute;
-        background-color: yellowgreen;
-        top: 0%;
-        left: 0%;
+        top: 25%;
+        left: 20%;
+        margin-top: 70px;
     }
-  }
+
+    /* Horizontal column layout */
+    .column {
+        float: left;
+        padding: 0 15px;
+    }
+
+    /* Vertical column layout */
+    @media screen and (max-width: 800px) {
+        .main {
+            width: 100vw;
+            height:100vh;
+            left: 0;
+        }
+
+        .column {
+            float: none;
+            padding: 1.5em 2.5em 2em;
+            display: block;
+        }
+
+        /* Clear floats after the columns */
+        /*.row:after {*/
+        /*    content: "";*/
+        /*    display: table;*/
+        /*    clear: both;*/
+        /*}*/
+
+        .row {
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: $color-app-background;
+        }
+    }
 </style>
