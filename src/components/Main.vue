@@ -45,16 +45,10 @@
   .main {
       position: relative;
       background-color: #f1f1f1;
-      width: 100%;
+      width: 70%;
       height:100vh;
-      margin-top: 20px;
-  }
-
-  .main-container {
-      background-color: #f1f1f1;
-      width: 100%;
-      height:100vh;
-      position: absolute;
+      margin: 0px;
+      left: 15%;
   }
 
   .cards {
