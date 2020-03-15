@@ -18,7 +18,7 @@
       </div>
 
       <div>
-        <p class="update-info tittle-text"> Updated at {{weatherInfo.updateAt}} </p>
+        <p class="update-info tittle-text"> {{updatedAtString}} </p>
       </div>
           
     </footer>
@@ -56,6 +56,10 @@
           'moderate-color': temp <= 25 && temp > 5,
           'hot-color': temp > 25
         }
+      },
+      updatedAtString() {
+        const dateOptions = { hour: '2-digit', minute: '2-digit', second: '2-digit' };
+        return `Updated at ${new Date(this.weatherInfo.updatedAt).toLocaleString("en-US", dateOptions)}`;
       }
     }
 }
