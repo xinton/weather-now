@@ -34,7 +34,7 @@
       cityId: Number,
     },
     mounted () {
-      this.loadResources();
+      this.verifyLoadResources();
     },
     data () {
       return {
@@ -43,6 +43,41 @@
       }
     },
     methods: {
+      passedTenMinutes(dateToCompare){
+        const now = new Date();
+        dateToCompare = new Date(dateToCompare);
+        return now.getTime() > dateToCompare.getTime() + 10 * 60 * 1000;
+      },
+      getLocalResource(){
+        const key = `weatherInfo${this.cityId}`;
+        if (localStorage.getItem(key)) {
+          try {
+            return JSON.parse(localStorage.getItem(key));
+          } catch(e) {
+            localStorage.removeItem(key);
+          }
+        } else {
+          return undefined;
+        }
+      },
+      verifyLoadResources() {
+        const localResource = this.getLocalResource();
+        if (localResource) {
+          if(this.passedTenMinutes(localResource.updatedAt)) {
+            this.loadResources();
+          } else {
+            // Load from local storage
+            this.weatherInfo = localResource;
+            this.status = 1;
+          }
+        } else {
+          this.loadResources();
+        }
+      },
+      saveStorage(item, key){
+        const itemParsed = JSON.stringify(item);
+        localStorage.setItem(key, itemParsed);
+      },
       async loadResources() {
         // TODO Create status Enum
         this.status = 3;
@@ -52,7 +87,8 @@
           const response = await this.$http.get(`http://api.openweathermap.org/data/2.5/weather?id=${this.cityId}&appid=${apiKey}&units=metric`);
           this.status = 1;
           this.weatherInfo = this.cityWeatherDto(response.body);
-          return this.cityWeatherDto(response.body);
+          this.saveStorage(this.weatherInfo, `weatherInfo${this.cityId}`);
+
         }catch (e) {
           console.log(e);
           this.status = 2;
@@ -60,17 +96,17 @@
       },
 
       cityWeatherDto({id, name, sys:{country} , main:{temp, pressure, humidity}}) {
-        const dateOptions = { hour: '2-digit', minute: '2-digit', second: '2-digit' };
-
-        return  {
+        const weatherDto  = {
           id,
           name,
           country,
           temp,
           pressure,
           humidity,
-          updateAt: new Date().toLocaleString("en-US", dateOptions)
+          updatedAt: new Date()
         };
+
+        return weatherDto;
       }
     },
     computed: {
@@ -103,7 +139,7 @@
 
   .card-header {
     padding: 5px;
-    border-bottom: 1px solid $color-app-background;
+    border-bottom: 1px solid $color-divider;
   }
 
   @media screen and (max-width: 800px) {

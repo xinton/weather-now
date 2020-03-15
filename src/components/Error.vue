@@ -4,6 +4,7 @@
     <p class="error-msg"> Somethinh went wrong </p>
 
     <button class="btn-try-again">
+
       Try Again
     </button>
   </section>
@@ -11,7 +12,7 @@
 </template>
 
 <script lang="js">
-
+    // TODO try again buttob
   export default  {
     name: 'error',
     props: [],
