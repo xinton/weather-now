@@ -1,0 +1,19 @@
+export function saveStorage(item, key){
+    const itemParsed = JSON.stringify(item);
+    localStorage.setItem(key, itemParsed);
+}
+
+export function getLocalResource(cityId){
+    const key = `weatherInfo${cityId}`;
+    // eslint-disable-next-line no-debugger
+    debugger;
+    if (localStorage.getItem(key)) {
+        try {
+            return JSON.parse(localStorage.getItem(key));
+        } catch(e) {
+            localStorage.removeItem(key);
+        }
+    } else {
+        return undefined;
+    }
+}
