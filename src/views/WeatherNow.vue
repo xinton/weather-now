@@ -1,5 +1,4 @@
 <template lang="html">
-
     <section class="main">
         <div class="row">
             <div class="column" v-for="cityId in citiesIds" :key="cityId">
@@ -12,7 +11,7 @@
 </template>
 
 <script lang="js">
-    import WeatherCardComponent from "./WeatherCard.vue";
+    import WeatherCardComponent from "../components/WeatherCard.vue";
 
     export default  {
         name: 'weather',
