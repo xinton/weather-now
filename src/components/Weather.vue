@@ -15,7 +15,7 @@
     import WeatherCardComponent from "./WeatherCard.vue";
 
     export default  {
-        name: 'main',
+        name: 'weather',
         components: {
             WeatherCardComponent,
         },

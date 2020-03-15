@@ -2,7 +2,7 @@
 
   <section class="weather-card">
     <header class="card-header info-text" >
-      <p class="daker-grey"> {{weatherInfo.name}}, {{weatherInfo.country}} </p>
+      <p class="dark-grey"> {{weatherInfo.name}}, {{weatherInfo.country}} </p>
     </header>
     <main>
       <component :is="currentComponent" v-bind="{weatherInfo: weatherInfo}"></component>
@@ -17,6 +17,8 @@
   import WeatherInfoComponent from "./WeatherInfo";
   import ErrorComponent from "./Error";
   import LoadingInfoComponent from "./LoadingInfo";
+  import {getWeatherInfo} from "../services/api-weather-service";
+  import {saveStorage, getLocalResource} from "../services/storage-service";
 
   const statusComponentEnum = {
     1: WeatherInfoComponent,
@@ -46,68 +48,38 @@
       passedTenMinutes(dateToCompare){
         const now = new Date();
         dateToCompare = new Date(dateToCompare);
-        return now.getTime() > dateToCompare.getTime() + 10 * 60 * 1000;
+        const tenMinutes = 10 * 60 * 1000;
+        return now.getTime() > dateToCompare.getTime() + tenMinutes;
       },
-      getLocalResource(){
-        const key = `weatherInfo${this.cityId}`;
-        if (localStorage.getItem(key)) {
-          try {
-            return JSON.parse(localStorage.getItem(key));
-          } catch(e) {
-            localStorage.removeItem(key);
-          }
+      reloadOrLoad(resource){
+        if(this.passedTenMinutes(resource.updatedAt)) {
+          this.loadResources();
         } else {
-          return undefined;
+          // Load from local storage
+          this.weatherInfo = resource;
+         this.status = 1;
         }
       },
       verifyLoadResources() {
-        const localResource = this.getLocalResource();
+        const localResource = getLocalResource(this.cityId);
         if (localResource) {
-          if(this.passedTenMinutes(localResource.updatedAt)) {
-            this.loadResources();
-          } else {
-            // Load from local storage
-            this.weatherInfo = localResource;
-            this.status = 1;
-          }
+          this.reloadOrLoad(localResource);
         } else {
           this.loadResources();
         }
       },
-      saveStorage(item, key){
-        const itemParsed = JSON.stringify(item);
-        localStorage.setItem(key, itemParsed);
-      },
       async loadResources() {
         // TODO Create status Enum
         this.status = 3;
-        // TODO Create Env file
-        const apiKey = '5c97dec5122c0098153b2e306fe538fa';
         try {
-          const response = await this.$http.get(`http://api.openweathermap.org/data/2.5/weather?id=${this.cityId}&appid=${apiKey}&units=metric`);
+          this.weatherInfo = await getWeatherInfo(this.cityId);
+          saveStorage(this.weatherInfo, `weatherInfo${this.cityId}`);
           this.status = 1;
-          this.weatherInfo = this.cityWeatherDto(response.body);
-          this.saveStorage(this.weatherInfo, `weatherInfo${this.cityId}`);
-
         }catch (e) {
-          console.log(e);
+          console.error(e);
           this.status = 2;
         }
       },
-
-      cityWeatherDto({id, name, sys:{country} , main:{temp, pressure, humidity}}) {
-        const weatherDto  = {
-          id,
-          name,
-          country,
-          temp,
-          pressure,
-          humidity,
-          updatedAt: new Date()
-        };
-
-        return weatherDto;
-      }
     },
     computed: {
       currentComponent() {
