@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import MainComponent from './components/Main.vue'
+import MainComponent from './components/Weather.vue'
 
 export default {
   name: 'App',
