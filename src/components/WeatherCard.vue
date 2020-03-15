@@ -1,12 +1,12 @@
 <template lang="html">
 
   <section class="weather-card">
-    <header class="card-header" >
+    <header class="card-header info-text" >
       <p class="daker-grey"> {{weatherInfo.name}}, {{weatherInfo.country}} </p>
     </header>
-    <body>
+    <main>
       <component :is="currentComponent" v-bind="{weatherInfo: weatherInfo}"></component>
-    </body>
+    </main>
     
   </section>
 
@@ -44,29 +44,33 @@
     },
     methods: {
       async loadResources() {
-        this.status = 3
+        // TODO Create status Enum
+        this.status = 3;
+        // TODO Create Env file
         const apiKey = '5c97dec5122c0098153b2e306fe538fa';
         try {
           const response = await this.$http.get(`http://api.openweathermap.org/data/2.5/weather?id=${this.cityId}&appid=${apiKey}&units=metric`);
-          this.status = 1
+          this.status = 1;
           this.weatherInfo = this.cityWeatherDto(response.body);
           return this.cityWeatherDto(response.body);
         }catch (e) {
           console.log(e);
-          this.status = 2
+          this.status = 2;
         }
       },
 
       cityWeatherDto({id, name, sys:{country} , main:{temp, pressure, humidity}}) {
-        const info = {
+        const dateOptions = { hour: '2-digit', minute: '2-digit', second: '2-digit' };
+
+        return  {
           id,
           name,
           country,
           temp,
           pressure,
-          humidity
+          humidity,
+          updateAt: new Date().toLocaleString("en-US", dateOptions)
         };
-        return info
       }
     },
     computed: {

@@ -1,24 +1,24 @@
 <template lang="html">
 
   <section class="weather-info">
-    <div :class="temperatureColorClass" class="temperature">
+    <main :class="temperatureColorClass" class="temperature">
     {{temperature}}
-    </div>
+    </main>
     <footer class="footer">
       <div class="row">
         <div class='col'>
-          <p class="grey"> HUMIDITY </p>
+          <p class="tittle-text"> HUMIDITY </p>
           <p> {{weatherInfo.humidity}} </p>
         </div>
 
         <div class='col'>
-          <p class="grey"> PRESSURE </p>
-          <p> {{weatherInfo.pressure}} </p>
+          <p class="tittle-text"> PRESSURE </p>
+          <p class="info-text"> {{weatherInfo.pressure}} </p>
         </div>
       </div>
 
       <div>
-        <p class="update-info"> updated ate 02:04 </p>
+        <p class="update-info tittle-text"> Updated at {{weatherInfo.updateAt}} </p>
       </div>
           
     </footer>
@@ -74,10 +74,6 @@
     margin-top: 0;
     padding-bottom: 5px;
     font-size: 0.8em;
-  }
-
-  .grey {
-    color: #b4b4b4;
   }
 
   .temperature {

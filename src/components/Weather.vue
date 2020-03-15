@@ -25,9 +25,6 @@
         data () {
             return {
                 citiesIds: [3421319, 3445709, 184742],
-                cardInfo1: {status: 1},
-                cardInfo2: {status: 2},
-                cardInfo3: {status: 3},
             }
         },
         methods: {
@@ -47,7 +44,7 @@
         background-color: #f1f1f1;
         width: 70%;
         height:100vh;
-        margin: 0px;
+        margin: 0;
         left: 15%;
     }
 
