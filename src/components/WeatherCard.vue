@@ -16,14 +16,20 @@
 
   import WeatherInfoComponent from "./WeatherInfo";
   import ErrorComponent from "./Error";
-  import LoadingInfoComponent from "./LoadingInfo";
+  import LoadingInfoComponent from "./Loading";
   import {getWeatherInfo} from "../services/api-weather-service";
   import {saveStorage, getLocalResource} from "../services/storage-service";
 
   const statusComponentEnum = {
-    1: WeatherInfoComponent,
-    2: ErrorComponent,
+    1 : WeatherInfoComponent,
+    2 : ErrorComponent,
     3: LoadingInfoComponent
+  };
+
+  const statusEnum = {
+    'SUCCESS': 1,
+    'ERROR': 2,
+    'LOADING': 3
   };
 
   export default  {
@@ -41,15 +47,13 @@
     data () {
       return {
         weatherInfo: {},
-        status: 2
+        status: statusComponentEnum['ERROR']
       }
     },
     methods: {
       passedTenMinutes(dateToCompare){
-        const now = new Date();
-        dateToCompare = new Date(dateToCompare);
         const tenMinutes = 10 * 60 * 1000;
-        return now.getTime() > dateToCompare.getTime() + tenMinutes;
+        return new Date().getTime() > new Date(dateToCompare).getTime() + tenMinutes;
       },
       reloadOrLoad(resource){
         if(this.passedTenMinutes(resource.updatedAt)) {
@@ -57,7 +61,7 @@
         } else {
           // Load from local storage
           this.weatherInfo = resource;
-         this.status = 1;
+         this.status = statusEnum['SUCCESS'];
         }
       },
       verifyLoadResources() {
@@ -70,14 +74,14 @@
       },
       async loadResources() {
         // TODO Create status Enum
-        this.status = 3;
+        this.status = statusEnum['LOADING'];
         try {
           this.weatherInfo = await getWeatherInfo(this.cityId);
           saveStorage(this.weatherInfo, `weatherInfo${this.cityId}`);
-          this.status = 1;
+          this.status = statusEnum['SUCCESS'];
         }catch (e) {
           console.error(e);
-          this.status = 2;
+          this.status = statusEnum['ERROR'];
         }
       },
     },
@@ -85,7 +89,7 @@
       currentComponent() {
         return statusComponentEnum[this.status];
       },
-      // TODO Set props dinamically
+      // TODO Only set props on WeatherInfoComponent
       currentProperties() {
         if (this.currentComponent === 'WeatherInfoComponent') {
           return {weatherInfo: this.weatherInfo};
@@ -94,8 +98,6 @@
       }
     }
 }
-
-
 </script>
 
 <style scoped lang="scss">
