@@ -2,7 +2,7 @@
 
   <section class="loading-info">
     <figure>
-        <img class="img" alt="Weather Now logo" src="../assets/loader.svg">
+        <img alt="Loading..." src="../assets/loader.svg">
       </figure> 
   </section>
 
@@ -34,6 +34,6 @@
 
 <style scoped lang="scss">
   .loading-info {
-
+    margin-top: 5em;
   }
 </style>
