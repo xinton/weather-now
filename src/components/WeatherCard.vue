@@ -67,7 +67,8 @@
         }
       },
       verifyLoadResources() {
-        const localResource = getLocalResource(this.city.name);
+        const key = `weatherInfo${this.city.name}`;
+        const localResource = getLocalResource(key);
         if (localResource) {
           this.reloadOrLoad(localResource);
         } else {
