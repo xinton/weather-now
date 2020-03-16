@@ -5,17 +5,17 @@
         <img class="img" alt="Weather Now logo" src="./assets/logo.svg">
       </figure>
     </header>
-    <MainComponent/>
+    <WeatherNow/>
   </div>
 </template>
 
 <script>
-import MainComponent from './views/WeatherNow.vue'
+import WeatherNow from './views/WeatherNow.vue'
 
 export default {
   name: 'App',
   components: {
-    MainComponent,
+    WeatherNow,
   }
 }
 </script>
