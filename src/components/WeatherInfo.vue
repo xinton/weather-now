@@ -49,7 +49,7 @@
     },
     computed: {
       temperature() {
-        return Math.round(this.weatherInfo.temp);
+        return `${Math.round(this.weatherInfo.temp)}°`;
       },
       temperatureColorClass() {
         const temp = this.weatherInfo.temp;
