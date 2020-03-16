@@ -1,10 +1,9 @@
 <template lang="html">
 
   <section class="error">
-    <p class="error-msg"> Somethinh went wrong </p>
+    <p class="error-msg"> Something went wrong </p>
 
-    <button class="btn-try-again">
-
+    <button class="btn-try-again" @click="tryAgain">
       Try Again
     </button>
   </section>
@@ -15,7 +14,7 @@
     // TODO try again buttob
   export default  {
     name: 'error',
-    props: [],
+    props: ['loadResources'],
     mounted () {
 
     },
@@ -25,7 +24,9 @@
       }
     },
     methods: {
-
+      tryAgain() {
+        this.loadResources();
+      }
     },
     computed: {
 
