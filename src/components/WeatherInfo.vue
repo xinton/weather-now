@@ -80,7 +80,8 @@
   }
 
   .temperature {
-    font-size: 8em;
+    font-size: 6em;
+    margin: 0.2em;
   }
 
   .footer {
