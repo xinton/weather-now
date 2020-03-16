@@ -32,6 +32,8 @@
     'LOADING': 3
   };
 
+  const tenMinutes = 10 * 60 * 1000;
+
   export default  {
     name: 'weatherCard',
     components: {
@@ -42,8 +44,8 @@
       city: Object,
     },
     mounted () {
-      // this.verifyLoadResources();
-      this.loadResources();
+      this.verifyLoadResources();
+
     },
     data () {
       return {
@@ -53,7 +55,6 @@
     },
     methods: {
       passedTenMinutes(dateToCompare){
-        const tenMinutes = 10 * 60 * 1000;
         return new Date().getTime() > new Date(dateToCompare).getTime() + tenMinutes;
       },
       reloadOrLoad(resource){
@@ -66,17 +67,15 @@
         }
       },
       verifyLoadResources() {
-        // eslint-disable-next-line no-debugger
-        debugger;
         const localResource = getLocalResource(this.city.name);
         if (localResource) {
           this.reloadOrLoad(localResource);
         } else {
           this.loadResources();
         }
+        setInterval(this.loadResources, tenMinutes);
       },
       async loadResources() {
-        // TODO Create status Enum
         this.status = statusEnum['LOADING'];
         try {
           this.weatherInfo = await getWeatherInfo(this.city.name);
