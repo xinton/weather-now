@@ -1,8 +1,8 @@
 <template lang="html">
     <section class="main">
         <div class="row">
-            <div class="column" v-for="cityId in citiesIds" :key="cityId">
-                <WeatherCardComponent :cityId="cityId"/>
+            <div class="column" v-for="city in cities" :key="city.id">
+                <WeatherCardComponent :city="city"/>
             </div>
             <div style="clear: both"></div>
         </div>
@@ -23,13 +23,12 @@
         },
         data () {
             return {
-                citiesIds: [3421319, 3445709, 184742],
+                cities: [
+                    {name: 'Nuuk', country: 'GL', id: 3421319},
+                    {name: 'Urubici', country: 'BR', id: 3445709},
+                    {name: 'Nairobi', country: 'KE', id: 184742}
+                ],
             }
-        },
-        methods: {
-
-        },
-        computed: {
         }
     }
 

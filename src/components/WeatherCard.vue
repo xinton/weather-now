@@ -2,10 +2,10 @@
 
   <section class="weather-card">
     <header class="card-header info-text" >
-      <p class="dark-grey"> {{weatherInfo.name}}, {{weatherInfo.country}} </p>
+      <p class="dark-grey"> {{cardTittle}} </p>
     </header>
     <main>
-      <component :is="currentComponent" v-bind="{weatherInfo: weatherInfo}"></component>
+      <component :is="currentComponent" v-bind="{weatherInfo: weatherInfo, loadResources: loadResources}"></component>
     </main>
     
   </section>
@@ -39,10 +39,11 @@
       ErrorComponent,
     },
     props: {
-      cityId: Number,
+      city: Object,
     },
     mounted () {
-      this.verifyLoadResources();
+      // this.verifyLoadResources();
+      this.loadResources();
     },
     data () {
       return {
@@ -65,7 +66,9 @@
         }
       },
       verifyLoadResources() {
-        const localResource = getLocalResource(this.cityId);
+        // eslint-disable-next-line no-debugger
+        debugger;
+        const localResource = getLocalResource(this.city.name);
         if (localResource) {
           this.reloadOrLoad(localResource);
         } else {
@@ -76,16 +79,20 @@
         // TODO Create status Enum
         this.status = statusEnum['LOADING'];
         try {
-          this.weatherInfo = await getWeatherInfo(this.cityId);
-          saveStorage(this.weatherInfo, `weatherInfo${this.cityId}`);
+          this.weatherInfo = await getWeatherInfo(this.city.name);
+          saveStorage(this.weatherInfo, `weatherInfo${this.city.name}`);
           this.status = statusEnum['SUCCESS'];
         }catch (e) {
           console.error(e);
+          this.weatherInfo = undefined;
           this.status = statusEnum['ERROR'];
         }
       },
     },
     computed: {
+      cardTittle(){
+        return `${this.city.name}, ${this.city.country}`;
+      },
       currentComponent() {
         return statusComponentEnum[this.status];
       },
