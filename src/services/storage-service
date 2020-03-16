@@ -3,10 +3,8 @@ export function saveStorage(item, key){
     localStorage.setItem(key, itemParsed);
 }
 
-export function getLocalResource(cityId){
-    const key = `weatherInfo${cityId}`;
-    // eslint-disable-next-line no-debugger
-    debugger;
+export function getLocalResource(cityName){
+    const key = `weatherInfo${cityName}`;
     if (localStorage.getItem(key)) {
         try {
             return JSON.parse(localStorage.getItem(key));

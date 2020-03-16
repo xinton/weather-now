@@ -8,17 +8,19 @@
       <div class="row">
         <div class='col'>
           <p class="tittle-text"> HUMIDITY </p>
-          <p> {{weatherInfo.humidity}} </p>
+          <p class="metric-info">{{this.weatherInfo.humidity}}</p>
+          <p class="unit-info">%</p>
         </div>
 
         <div class='col'>
           <p class="tittle-text"> PRESSURE </p>
-          <p class="info-text"> {{weatherInfo.pressure}} </p>
+          <p class="metric-info">{{this.weatherInfo.pressure}}</p>
+          <p class="unit-info">nPa</p>
         </div>
       </div>
 
-      <div>
-        <p class="update-info tittle-text"> {{updatedAtString}} </p>
+      <div class="update-info">
+        <p class="tittle-text"> <time>{{updatedAtString}}</time> </p>
       </div>
           
     </footer>
@@ -49,6 +51,12 @@
       temperature() {
         return Math.round(this.weatherInfo.temp);
       },
+      pressure(){
+        return `${this.weatherInfo.pressure}nPa`
+      },
+      humidity(){
+        return `${this.weatherInfo.humidity}%`
+      },
       temperatureColorClass() {
         const temp = this.weatherInfo.temp;
         return {
@@ -75,6 +83,7 @@
   }
 
   .update-info {
+    width: 100%;
     margin-top: 0;
     padding-bottom: 5px;
     font-size: 0.8em;
@@ -95,6 +104,18 @@
 
   .col {
     flex: 50%;
+  }
+
+  .metric-info {
+    display: inline;
+    font-size: 1.3em;
+    color: $color-dark-gray;
+  }
+
+  .unit-info {
+    display: inline;
+    color: $color-gray;
+    font-size: small;
   }
 
   .cold-color {
