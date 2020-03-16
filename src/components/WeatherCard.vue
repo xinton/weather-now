@@ -73,6 +73,8 @@
         } else {
           this.loadResources();
         }
+
+        // Reload every 10 minutes
         setInterval(this.loadResources, tenMinutes);
       },
       async loadResources() {

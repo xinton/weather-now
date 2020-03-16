@@ -46,6 +46,7 @@
     background-color: white;
     border: 2px solid black;
     padding: 15px;
+    cursor: pointer;
   }
 
   .error-msg {

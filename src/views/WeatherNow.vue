@@ -4,10 +4,8 @@
             <div class="column" v-for="city in cities" :key="city.id">
                 <WeatherCardComponent :city="city"/>
             </div>
-            <div style="clear: both"></div>
         </div>
     </section>
-
 </template>
 
 <script lang="js">
@@ -72,13 +70,6 @@
             padding: 1.5em 2.5em 2em;
             display: block;
         }
-
-        /* Clear floats after the columns */
-        /*.row:after {*/
-        /*    content: "";*/
-        /*    display: table;*/
-        /*    clear: both;*/
-        /*}*/
 
         .row {
             top: 0;

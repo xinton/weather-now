@@ -51,12 +51,6 @@
       temperature() {
         return Math.round(this.weatherInfo.temp);
       },
-      pressure(){
-        return `${this.weatherInfo.pressure}nPa`
-      },
-      humidity(){
-        return `${this.weatherInfo.humidity}%`
-      },
       temperatureColorClass() {
         const temp = this.weatherInfo.temp;
         return {
@@ -77,10 +71,6 @@
 
 <style scoped lang="scss">
   @import "../assets/style";
-
-  .weather-info {
-
-  }
 
   .update-info {
     width: 100%;
